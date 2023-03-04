@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>XML Parser</title>
+</head>
+
+<body>
+  <script>
+    const xmlStr = `
+    <katalog>
+      <kitap id="bk1">
+        <yazar>J. K. Rowling</yazar>
+        <başlık>Harry Potter</başlık>
+        <tür>Fantastik</tür>
+        <fiyat>40</fiyat>
+      </kitap>
+      <kitap id="bk2" baskı="3. baskı">
+        <yazar>Miguel de Cervantes</yazar>
+        <başlık>Don Kişot</başlık>
+        <fiyat>50</fiyat>
+      </kitap>
+    </katalog>
+    `;
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(xmlStr, "application/xml");
+    const rootElem = doc.documentElement;
+    console.log(`Kök eleman adı: ${rootElem.nodeName}`);
+
+    const books = rootElem.children;
+    for (let book of books) {
+      console.log(`Kök elemanın çocuğu: ${book.nodeName}`);
+    }
+
+    console.log(`1. kitabın baskısı: ${rootElem.children[1].attributes["baskı"].value}`);
+
+    rootElem.children[0].setAttribute("yeni-attribute", "hello-world");
+
+    const serializer = new XMLSerializer();
+    console.log("XML'in güncellenmiş hali:");
+    console.log(serializer.serializeToString(doc));
+  </script>
+</body>
+
+</html>

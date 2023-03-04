@@ -1,0 +1,12 @@
+<!ELEMENT katalog (kitap | plak)*>
+<!ELEMENT kitap (yazar, başlık, tür?, fiyat)>
+<!ATTLIST kitap id CDATA #REQUIRED 
+                baskı CDATA #IMPLIED>
+<!ELEMENT yazar (#PCDATA)>
+<!ELEMENT başlık (#PCDATA)>
+<!ELEMENT tür (#PCDATA)>
+<!ELEMENT fiyat (#PCDATA)>
+<!ELEMENT plak (albüm, şarkıcı+, yılı)>
+<!ELEMENT albüm (#PCDATA)>
+<!ELEMENT şarkıcı (#PCDATA)>
+<!ELEMENT yılı (#PCDATA)>
