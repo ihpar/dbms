@@ -1,0 +1,37 @@
+{
+  "katalog": {
+    "kitaplar": [
+      {
+        "id": "bk1",
+        "yazar": "J. K. Rowling",
+        "başlık": "Harry Potter",
+        "tür": "Fantastik",
+        "fiyat": 40
+      },
+      {
+        "id": "bk2",
+        "baskı": 3,
+        "yazar": "Miguel de Cervantes",
+        "başlık": "Don Kişot",
+        "fiyat": 50
+      }
+    ],
+    "plaklar": [
+      {
+        "albüm": "Love for Sale",
+        "şarkıcılar": [
+          "Tony Bennett",
+          "Lady Gaga"
+        ],
+        "yılı": 2021
+      },
+      {
+        "albüm": "Back in Black",
+        "şarkıcılar": [
+          "AC/DC"
+        ],
+        "yılı": 1980
+      }
+    ]
+  }
+}
