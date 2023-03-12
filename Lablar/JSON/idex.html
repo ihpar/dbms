@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSON Örnek
+  </title>
+  <style>
+    input,
+    button {
+      padding: 12px 24px;
+      font-size: 14pt;
+      margin: 6px;
+      box-sizing: border-box;
+      background-color: #f5f5f5;
+      color: #444;
+      border: 1px solid #333;
+    }
+
+    button {
+      cursor: pointer;
+      transition: background-color 250ms;
+    }
+
+    button:hover {
+      background-color: #fff;
+    }
+  </style>
+</head>
+
+<body>
+  <div style="width: 700px; margin: auto;">
+
+    <input type="text" id="txt-query" placeholder="Ürün arama..." style="width: 500px;">
+    <button type="button" id="btn-search">Ürünleri bul</button>
+
+    <div style="padding: 6px;">
+      <h2>Arama Sonuçları</h1>
+        <div id="dv-search-results"></div>
+    </div>
+
+  </div>
+
+  <script>
+    const queryTextBox = document.getElementById("txt-query");
+    const searchBtn = document.getElementById("btn-search");
+    const dvResults = document.getElementById("dv-search-results");
+
+    searchBtn.addEventListener("click", () => {
+      const query = queryTextBox.value.trim();
+      if (!query) {
+        queryTextBox.focus();
+        return;
+      }
+
+      const searchData = {
+        "search-term": query
+      };
+
+      fetch("http://127.0.0.1:5500/find-products", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(searchData),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Success:", data);
+          const haveResults = data["have-results"];
+          if (haveResults) {
+            dvResults.innerHTML = JSON.stringify(data);
+          } else {
+            dvResults.innerHTML = query + " terimi için sonuç bulunamadı...";
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    });
+  </script>
+
+</body>
+
+</html>

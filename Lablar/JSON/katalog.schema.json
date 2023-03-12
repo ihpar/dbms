@@ -1,0 +1,77 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "katalog": {
+      "type": "object",
+      "properties": {
+        "kitaplar": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "yazar": {
+                "type": "string"
+              },
+              "başlık": {
+                "type": "string"
+              },
+              "tür": {
+                "type": "string"
+              },
+              "fiyat": {
+                "type": "integer"
+              }
+            },
+            "required": [
+              "id",
+              "yazar",
+              "başlık",
+              "fiyat"
+            ]
+          }
+        },
+        "plaklar": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "albüm": {
+                "type": "string"
+              },
+              "şarkıcılar": {
+                "type": "array",
+                "items": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "string"
+                  }
+                ]
+              },
+              "yılı": {
+                "type": "integer"
+              }
+            },
+            "required": [
+              "albüm",
+              "şarkıcılar",
+              "yılı"
+            ]
+          }
+        }
+      },
+      "required": [
+        "kitaplar",
+        "plaklar"
+      ]
+    }
+  },
+  "required": [
+    "katalog"
+  ]
+}
