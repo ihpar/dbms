@@ -42,7 +42,7 @@ DB = {
 
 
 @app.route("/find-products", methods=["POST"])
-def classify():
+def find_products():
     data = request.get_json()
     search_term = data["search-term"]
     search_term = search_term.lower()

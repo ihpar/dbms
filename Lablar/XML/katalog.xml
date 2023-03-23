@@ -1,26 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE katalog SYSTEM "katalog.dtd">
 <katalog>
-  <kitap id="bk1">
-    <yazar>J. K. Rowling</yazar>
-    <başlık>Harry Potter</başlık>
-    <tür>Fantastik</tür>
-    <fiyat>40</fiyat>
-  </kitap>
-  <kitap id="bk2" baskı="3. baskı">
-    <yazar>Miguel de Cervantes</yazar>
-    <başlık>Don Kişot</başlık>
-    <fiyat>50</fiyat>
-  </kitap>
-  <plak>
-    <albüm>Love for Sale</albüm>
-    <şarkıcı>Tony Bennett</şarkıcı>
-    <şarkıcı>Lady Gaga</şarkıcı>
-    <yılı>2021</yılı>
-  </plak>
-  <plak>
-    <albüm>Back in Black</albüm>
-    <şarkıcı>AC/DC</şarkıcı>
-    <yılı>1980</yılı>
-  </plak>
+  <kitaplar>
+    <kitap id="bk1">
+      <yazar>J. K. Rowling</yazar>
+      <başlık>Harry Potter</başlık>
+      <tür>Fantastik</tür>
+      <fiyat>40</fiyat>
+    </kitap>
+    <kitap id="bk2" baskı="3. baskı">
+      <yazar>Miguel de Cervantes</yazar>
+      <başlık>Don Kişot</başlık>
+      <fiyat>50</fiyat>
+    </kitap>
+  </kitaplar>
+  <plaklar>
+    <plak>
+      <albüm>Love for Sale</albüm>
+      <şarkıcı>Tony Bennett</şarkıcı>
+      <şarkıcı>Lady Gaga</şarkıcı>
+      <yılı>2021</yılı>
+    </plak>
+    <plak>
+      <albüm>Back in Black</albüm>
+      <şarkıcı>AC/DC</şarkıcı>
+      <yılı>1980</yılı>
+    </plak>
+  </plaklar>
 </katalog>
