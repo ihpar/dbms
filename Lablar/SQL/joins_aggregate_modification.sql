@@ -154,6 +154,23 @@ select ogr_id, ogr_adi, okul_adi, ana_dal
 from ogrenciler full outer join basvurular using(ogr_id);
 
 /*
+***** Limit ve First N *****
+*/
+
+-- En yüksek ortalamaya sahip ilk 3 öğrenci
+select ort, ogr_id
+from ogrenciler
+where ort is not null
+order by ort desc
+limit 3;
+
+select ort, ogr_id
+from ogrenciler
+where ort is not null
+order by ort desc
+fetch first 3 rows only;
+
+/*
 ***** Yığışım (Aggregation) *****
 */
 
