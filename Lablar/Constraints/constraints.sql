@@ -193,3 +193,67 @@ insert into urunler values
 
 select * from urunler;
 
+-------------------------------------------
+--- Referans bütünlüğü kısıtlaması --------
+-------------------------------------------
+
+create table okullar (
+  okul_adi varchar(32) primary key,
+  sehir varchar(32),
+  mevcut int
+);
+
+create table ogrenciler (
+  ogr_id int primary key,
+  ogr_adi varchar(32)
+);
+
+create table basvurular (
+  ogr_id int references ogrenciler(ogr_id),
+  okul_adi varchar(32) references okullar(okul_adi),
+  sonuc char(1)
+);
+-- 1
+insert into basvurular values (123, 'BAİBÜ', 'K');
+-- 2
+insert into ogrenciler values (123, 'Ali');
+insert into ogrenciler values (456, 'Veli');
+insert into okullar values ('BAİBÜ', 'Bolu', 10000);
+insert into okullar values ('İTÜ', 'İst', 20000);
+
+insert into basvurular values (123, 'BAİBÜ', 'K');
+-- 3
+update basvurular set ogr_id=456 where ogr_id=123;
+-- 4
+delete from okullar where okul_adi = 'BAİBÜ';
+-- 5
+update okullar set okul_adi = 'TBAİBÜ' where okul_adi = 'BAİBÜ';
+-- 6
+drop table ogrenciler;
+-- 7
+drop table basvurular;
+-- 8
+create table basvurular (
+  ogr_id int references ogrenciler(ogr_id) 
+    on delete set null,
+  okul_adi varchar(32) references okullar(okul_adi) 
+    on delete set null 
+    on update cascade,
+  sonuc char(1)
+);
+
+insert into basvurular values 
+(123, 'BAİBÜ', 'K'),
+(456, 'BAİBÜ', 'R'),
+(123, 'İTÜ', 'K'),
+(456, 'İTÜ', 'K');
+-- 9
+delete from ogrenciler where ogr_id = 123;
+
+select * from basvurular;
+-- 10
+update ogrenciler set ogr_id = 789 where ogr_id = 456;
+-- 11
+update okullar set okul_adi = 'TBAİBÜ' where okul_adi = 'BAİBÜ';
+
+select * from basvurular;
