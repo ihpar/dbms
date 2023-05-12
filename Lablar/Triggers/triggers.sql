@@ -171,3 +171,66 @@ insert into basvurular values
 (103, 'Ankara', 'Biyoloji', NULL),
 (104, 'Ankara', 'Matematik', NULL),
 (105, 'Ankara', 'Tarih', NULL);
+
+-- urunler tablosu --
+
+CREATE TABLE urunler (
+	id INTEGER,
+	baslik TEXT NOT NULL,
+	aciklama TEXT,
+	fiyat INTEGER,
+	PRIMARY KEY(id AUTOINCREMENT)
+);
+
+insert into urunler(baslik, aciklama, fiyat)
+values 
+('Kalem', 'Kurşun kalem', 20),
+('Kalem', 'Tükenmez kalem', 30),
+('Defter', '60 yaprak çizgili defter', 40),
+('Defter', '80 yaprak kareli defter', 50),
+('Bardak', 'Küçük cam bardak', 10),
+('Şarj aleti', 'USB-C Şarj aleti', 150);
+
+-- urun logları tablosu --
+
+create table urun_loglari (
+    urun_id integer not null,
+    aksiyon text not null,
+    zaman text
+);
+
+---- delete işlemi için log kaydı oluşturma ----
+
+create trigger urun_silme_kaydi
+before delete on urunler 
+for each row 
+begin
+    insert into urun_loglari(urun_id, aksiyon, zaman)
+    values(old.id, 'silindi', datetime('now'));
+end;
+
+delete from urunler
+where fiyat < 40;
+
+---- update işlemi için log kaydı oluşturma ----
+
+create trigger urun_guncelleme_kaydi
+after update on urunler 
+for each row 
+begin 
+    insert into urun_loglari values(old.id, 'güncellendi', datetime('now'));
+end;
+
+update urunler set fiyat = fiyat * 1.25;
+
+---- insert işlemi için log kaydı oluşturma ----
+
+create trigger urun_ekleme_kaydi 
+after insert on urunler 
+for each row 
+begin
+    insert into urun_loglari values(new.id, 'eklendi', datetime('now'));
+end;
+
+insert into urunler(baslik, aciklama, fiyat)
+values('Saat', 'Kol saati', 500);
