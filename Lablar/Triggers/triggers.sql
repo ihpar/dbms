@@ -234,3 +234,9 @@ end;
 
 insert into urunler(baslik, aciklama, fiyat)
 values('Saat', 'Kol saati', 500);
+
+-- trigger yok etme --
+
+drop trigger urun_silme_kaydi;
+drop trigger urun_ekleme_kaydi; 
+drop trigger urun_guncelleme_kaydi;
