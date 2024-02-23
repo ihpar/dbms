@@ -1,7 +1,10 @@
-<!ELEMENT katalog (kitap | plak)*>
+<!ELEMENT katalog (kitaplar | plaklar)*>
+<!ELEMENT kitaplar (kitap)*>
+<!ELEMENT plaklar (plak)*>
 <!ELEMENT kitap (yazar, başlık, tür?, fiyat)>
-<!ATTLIST kitap id CDATA #REQUIRED 
-                baskı CDATA #IMPLIED>
+<!ATTLIST kitap
+    id CDATA #REQUIRED
+    baskı CDATA #IMPLIED>
 <!ELEMENT yazar (#PCDATA)>
 <!ELEMENT başlık (#PCDATA)>
 <!ELEMENT tür (#PCDATA)>
