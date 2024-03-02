@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dummy Json</title>
+  </head>
+  <body>
+    <ul id="ul-posts"></ul>
+    <script>
+      const ulPosts = document.getElementById("ul-posts");
+      fetch("https://dummyjson.com/posts", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          const posts = data["posts"];
+          posts.forEach((element) => {
+            const li = document.createElement("li");
+            li.innerHTML = `${element.id} - ${element.title}`;
+            ulPosts.appendChild(li);
+          });
+        })
+        .catch((err) => {
+          console.error("Error!", err);
+        });
+    </script>
+  </body>
+</html>
