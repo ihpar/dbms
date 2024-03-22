@@ -192,11 +192,6 @@ select avg(ort)
 from ogrenciler natural join basvurular
 where ana_dal = 'Bilg. Müh.';
 
--- Bilg Müh'e başvuran öğrencilerin not ortalaması (Yanlış)
-select avg(ort)
-from ogrenciler natural join basvurular
-where ana_dal = 'Bilg. Müh.';
-
 -- Bilg Müh'e başvuran öğrencilerin not ortalaması (Doğru)
 select avg(ort)
 from ogrenciler
