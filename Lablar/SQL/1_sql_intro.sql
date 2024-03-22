@@ -150,6 +150,10 @@ select okul_adi as ad
 from okullar
 order by ad;
 
+-- yeni kayıtlar
+insert into ogrenciler values(120, 'Ayşe', 2.9, 500);
+insert into basvurular values(120, 'Gazi', 'Elk. Müh.', 'K');
+
 /*
 hem Bilg müh hem de Elk müh'e başvuran öğrencilerin ID'lerinin listesi
 */
@@ -175,23 +179,22 @@ where ana_dal = 'Elk. Müh.';
 /*
 ************************************************
 ********* Where kısmındaki iç sorgular *********
-********* Sub queries in WHERE *****************
 ************************************************
 */
 
 /*
-Elk Müh'e başvuran öğrencilerin ID ve adlarının listesi
+Elk Müh'e başvuran öğrencilerin adlarının listesi
 */
-select ogr_id, ogr_adi
+select ogr_adi
 from ogrenciler
 where ogr_id in (select ogr_id 
 				 from basvurular
 				 where ana_dal = 'Elk. Müh.');
 
 /*
-Elk Müh'e başvuran öğrencilerin ID ve adlarının listesi
+Elk Müh'e başvuran öğrencilerin adlarının listesi
 */
-select distinct o.ogr_id, o.ogr_adi
+select distinct o.ogr_adi
 from ogrenciler o, basvurular b
 where o.ogr_id = b.ogr_id and b.ana_dal = 'Elk. Müh.';
 
@@ -207,6 +210,17 @@ where ogr_id in (select ogr_id
 				      from basvurular where 
 				      ana_dal = 'Elk. Müh.');
 
+-- Elk Müh'e başvuran öğrencilerin ortalamaları
+select ort from ogrenciler
+where ogr_id in 
+	(select ogr_id from basvurular 
+	 where ana_dal = 'Elk. Müh.');
+
+-- VS (distinct ile düzeltilemez)
+select ort 
+from ogrenciler o, basvurular b 
+where o.ogr_id = b.ogr_id and b.ana_dal = 'Elk. Müh.'; 
+
 /*
 Bulunduğu şehirde 1'den fazla okul bulunan okulların listesi (yanlış)
 */
@@ -219,6 +233,14 @@ where exists (select *
 /*
 Bulunduğu şehirde 1'den fazla okul bulunan okulların listesi (doğru)
 */
+select o1.okul_adi, o1.sehir
+from okullar o1
+where exists (select * 
+			 from okullar o2
+			 where o2.sehir = o1.sehir and o1.okul_adi < o2.okul_adi);
+
+-- VS
+
 select o1.okul_adi, o1.sehir
 from okullar o1
 where exists (select * 
@@ -237,9 +259,26 @@ where not exists (select *
 /*
 ortalaması en yüksek olan öğrenci listesi
 */
+select o1.ogr_adi
+from ogrenciler o1
+where not exists (select * from ogrenciler o2
+				 where o2.ort > o1.ort)
+
+-- VS (Yanlış)
+select o1.ogr_adi, o1.ort
+from ogrenciler o1, ogrenciler o2 
+where o1.ort > o2.ort;
+
+-- Alternatif 1
 select ogr_adi, ort
 from ogrenciler
 where ort >= all (select ort from ogrenciler);
+
+-- Alternatif 2
+select o1.ogr_adi, o1.ort
+from ogrenciler o1
+where ort > all (select o2.ort from ogrenciler o2
+				where o2.ogr_id != o1.ogr_id);
 
 /*
 lise mevcudu en düşük olmayan tüm öğrencilerin listesi
@@ -248,10 +287,15 @@ select ogr_id, ogr_adi, lis_mev
 from ogrenciler
 where lis_mev > any (select lis_mev from ogrenciler);
 
+-- Alternatif
+select o1.ogr_id, o1.ogr_adi, o1.lis_mev
+from ogrenciler o1
+where exists (select * from ogrenciler o2
+			 where o2.lis_mev < o1.lis_mev);
+
 /*
 ************************************************
 ********* FROM kısmındaki iç sorgular **********
-********* Sub queries in FROM ******************
 ************************************************
 */
 
@@ -270,6 +314,5 @@ where abs(ort * (lis_mev / 1000.0) - ort) > 1;
 
 select *
 from (select ogr_id, ogr_adi, ort, lis_mev, ort * (lis_mev / 1000.0) as agirlikli_ort
-	  from ogrenciler) G
-where abs(G.agirlikli_ort - ort) > 1;
-
+	  from ogrenciler) O
+where abs(O.agirlikli_ort - ort) > 1;

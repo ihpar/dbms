@@ -113,11 +113,11 @@ where o1.ogr_id < o2.ogr_id;
 select *
 from ogrenciler o1 natural join ogrenciler o2;
 
--- Başvuruda bulunan tüm öğrencilerin bilgileri
+-- Başvuruda bulunan tüm öğrencilerin id, ad, başvuru okulları ve ana dalları bilgileri
 select ogr_id, ogr_adi, okul_adi, ana_dal
 from ogrenciler inner join basvurular using(ogr_id);
 
--- Başvuruda bulunan ve bulunmayan tüm öğrencilerin bilgileri
+-- Başvuruda bulunan ve bulunmayan tüm öğrencilerin id, ad, başvuru okulları ve ana dalları bilgileri
 select ogr_id, ogr_adi, okul_adi, ana_dal
 from ogrenciler left outer join basvurular using(ogr_id);
 
