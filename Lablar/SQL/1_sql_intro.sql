@@ -316,3 +316,34 @@ select *
 from (select ogr_id, ogr_adi, ort, lis_mev, ort * (lis_mev / 1000.0) as agirlikli_ort
 	  from ogrenciler) O
 where abs(O.agirlikli_ort - ort) > 1;
+
+/*
+***********************************************************
+********* WITH ile isimlendirilmiş alt query'ler **********
+***********************************************************
+*/
+
+/*
+Ortalaması ile ağırlıklı ortalaması arasındaki fark 1'den büyük olan öğrenciler
+ağırlıklı ortalama = ortalama * lise mevcudu / 1000
+*/
+
+with aort_tablosu as (
+	select ogr_id, round((ort * (lis_mev / 1000.0))::numeric, 2) as agirlikli_ort 
+	from ogrenciler
+)
+select O.ogr_id, ogr_adi, ort, lis_mev, agirlikli_ort
+from ogrenciler O, aort_tablosu A 
+where O.ogr_id = A.ogr_id
+	and abs(ort - agirlikli_ort) > 1;
+
+-- Alternatif
+
+with aort_tablosu(ogr_id, agirlikli_ort) as (
+	select ogr_id, round((ort * (lis_mev / 1000.0))::numeric, 2)
+	from ogrenciler
+)
+select O.ogr_id, ogr_adi, ort, lis_mev, agirlikli_ort
+from ogrenciler O, aort_tablosu A 
+where O.ogr_id = A.ogr_id
+	and abs(ort - agirlikli_ort) > 1;
