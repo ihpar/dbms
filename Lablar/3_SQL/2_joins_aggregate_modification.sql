@@ -342,3 +342,91 @@ where okul_adi = 'Selçuk' and ana_dal = 'Bilg. Müh.';
 delete
 from basvurular
 where okul_adi = 'Selçuk';
+
+/*
+***** Satranç Müsabakaları *****
+*/
+
+create table maclar(
+	mac_id serial,
+	p1 integer,
+	p2 integer,
+	kazanan integer,
+	tarih date
+);
+
+insert into maclar(p1, p2, kazanan, tarih) values
+(100, 101, 100, '2024-03-15'),
+(100, 102, 100, '2024-03-15'),
+(101, 102, 102, '2024-03-15'),
+(103, 101, 103, '2024-03-15'),
+(103, 102, 103, '2024-03-15'),
+(103, 100, 103, '2024-03-15'),
+(104, 101, 101, '2024-03-16'),
+(104, 102, 102, '2024-03-16'),
+(104, 103, 104, '2024-03-16'),
+(105, 100, 100, '2024-03-16'),
+(105, 101, 101, '2024-03-17'),
+(105, 102, 105, '2024-03-17'),
+(106, 100, 100, '2024-03-18'),
+(106, 105, 105, '2024-03-18');
+
+-- yeniden eskiye doğru tüm maçların listesi
+select *
+from maclar
+order by tarih desc;
+
+-- 17 Mart 2024 ve sonrasında yapılan maçların listesi
+select *
+from maclar
+where tarih >= '2024-03-17';
+
+-- 16 Mart - 18 Mart arasında yapılan maçların listesi
+select *
+from maclar
+where tarih between '2024-03-16' and '2024-03-18';
+
+-- tüm maçlar ve şu anki zamandan ne kadar önce yapıldıklarının listesi
+select *, NOW() - tarih as fark
+from maclar;
+
+-- tüm maçlar ve şu anki zamandan ne kadar gün önce yapıldıklarının listesi
+select *, extract(day from NOW() - tarih) as fark
+from maclar;
+
+-- tüm maçlar ve şu anki zamandan ne kadar ay önce yapıldıklarının listesi
+select *, extract(month from NOW() - tarih) as fark
+from maclar;
+
+-- maç kazanan oyuncuların kazandıkları maç sayılarına göre azalan sıralaması
+select kazanan as oyuncu, count(*) as kazanma_sayisi
+from maclar
+group by kazanan
+order by kazanma_sayisi desc;
+
+-- tüm oyuncuların kazandıkları maç sayılarına göre azalan sıralaması
+select kazanan as oyuncu, count(*) as kazanma_sayisi
+from maclar
+group by kazanan
+union
+select distinct p1 as oyuncu, 0 as kazanma_sayisi
+from maclar
+where p1 not in (select kazanan from maclar)
+union
+select distinct p2 as oyuncu, 0 as kazanma_sayisi
+from maclar
+where p2 not in (select kazanan from maclar)
+order by kazanma_sayisi desc;
+
+-- günlere göre oynanan maç sayıları
+select tarih, count(*) as mac_sayisi
+from maclar
+group by tarih
+order by tarih;
+
+-- en çok maç yapılan gün ve o günde yapılmış maç sayısı
+select tarih, count(*) as mac_sayisi
+from maclar
+group by tarih
+order by mac_sayisi desc
+limit 1;
