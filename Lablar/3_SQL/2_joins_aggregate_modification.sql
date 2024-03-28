@@ -187,7 +187,7 @@ select min(ort)
 from ogrenciler natural join basvurular
 where ana_dal = 'Bilg. Müh.';
 
--- Bilg Müh'e başvuran öğrencilerin not ortalaması (Yanlış)
+-- Bilg Müh'e başvuran öğrencilerin ortalama not ortalaması (Yanlış)
 select avg(ort)
 from ogrenciler natural join basvurular
 where ana_dal = 'Bilg. Müh.';
@@ -233,10 +233,12 @@ from ogrenciler inner join basvurular using(ogr_id)
 group by okul_adi, ana_dal;
 
 -- öğrencilerin başvuruda bulunduğu üniversite sayıları
-select ogrenciler.ogr_id, count(distinct okul_adi)
-from ogrenciler, basvurular
-where ogrenciler.ogr_id = basvurular.ogr_id
-group by ogrenciler.ogr_id;
+-- bir öğrenci hiç bir başvuruda bulunmadıysa yanında 0 yazmalıdır.
+select o.ogr_id, count(distinct b.okul_adi) as b_u_s
+from ogrenciler o left outer join basvurular b
+	on o.ogr_id = b.ogr_id
+group by o.ogr_id
+order by o.ogr_id
 
 -- öğrencilerin başvuruda bulunduğu üniversite sayıları 
 -- bir öğrenci hiç bir başvuruda bulunmadıysa yanında 0 yazmalıdır.
@@ -255,11 +257,25 @@ from basvurular
 group by okul_adi
 having count(*) < 3;
 
+select * 
+from (select okul_adi, count(*) as basvuru_sayisi
+		from basvurular
+		group by okul_adi)
+where basvuru_sayisi < 3;
+
 -- 3'ten daha az farklı öğrencinin başvuru yapmış olduğu üniversiteler
 select okul_adi
 from basvurular
 group by okul_adi
 having count(distinct ogr_id) < 3;
+
+select *
+from (
+	-- b_y_f_o_s: basvuru yapan farklı ogrenci sayisi
+	select okul_adi, count(distinct ogr_id) as b_y_f_o_s
+	from basvurular
+	group by okul_adi)
+where b_y_f_o_s < 3;
 
 /*
 ***** NULL Değerler *****
