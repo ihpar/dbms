@@ -418,15 +418,22 @@ from maclar
 where p2 not in (select kazanan from maclar)
 order by kazanma_sayisi desc;
 
--- günlere göre oynanan maç sayıları
+-- tarihlere göre oynanan maç sayıları
 select tarih, count(*) as mac_sayisi
 from maclar
 group by tarih
 order by tarih;
 
--- en çok maç yapılan gün ve o günde yapılmış maç sayısı
+-- en çok maç yapılan tarih ve o günde yapılmış maç sayısı
 select tarih, count(*) as mac_sayisi
 from maclar
 group by tarih
 order by mac_sayisi desc
 limit 1;
+
+select tarih, count(*) as mac_sayisi
+from maclar
+group by tarih
+having count(*) >= all (select count(*)
+						from maclar
+						group by tarih);
