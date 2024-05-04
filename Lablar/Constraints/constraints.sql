@@ -10,9 +10,9 @@ CREATE TABLE basvurular
 
 -- tabloya veri kaydetme syntaxı
 -- insert into tablo_adi values (v11, ..., v1n), (v21, ..., v2n), ..., (vm1, ..., vmn);
-insert into bas values (456, 'BAİBÜ', '2023-04-29', 'K'); -- başarılı
+insert into basvurular values (456, 'BAİBÜ', '2023-04-29', 'K'); -- başarılı
 
-insert into bas values (456, 'BAİBÜ', 'Pazartesi', 150); -- başarısız
+insert into basvurular values (456, 'BAİBÜ', 'Pazartesi', 150); -- başarısız
 
 -- tablo'yu içindeki verilerle birlikte yok etme syntaxı
 -- drop table tablo_adi
@@ -190,6 +190,9 @@ create table urunler (
 insert into urunler values 
 (default, 'Kalem', 'Güzel bir kalem', 59.99),
 (default, 'Defter', 'Kareli defter', 39.99);
+
+insert into urunler(baslik, aciklama, fiyat)
+values('İşaret Parmağı', 'Mavi işaret parmağı', 99.99);
 
 select * from urunler;
 
