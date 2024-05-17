@@ -16,7 +16,7 @@ CREATE TABLE ogrenciler (
 
 CREATE TABLE okullar (
     okul_adi text,
-    sehir ctext,
+    sehir text,
     kayit_sayisi integer
 );
 
