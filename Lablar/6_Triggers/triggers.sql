@@ -116,7 +116,7 @@ create trigger t3
 after update of okul_adi on okullar 
 for each row 
 begin
-	update basvurular 
+	update basvurular s
 	set okul_adi = new.okul_adi 
 	where okul_adi = old.okul_adi;
 end;
@@ -222,6 +222,16 @@ begin
 end;
 
 update urunler set fiyat = fiyat * 1.25;
+
+create trigger urun_fiyat_guncelleme_kaydi
+after update of fiyat on urunler 
+for each row 
+begin 
+    insert into urun_loglari 
+	values(old.id, 'fiyat güncellendi ' || old.fiyat || ' => ' || new.fiyat, datetime('now'));
+end;
+
+update urunler set fiyat = 100 where id=3;
 
 ---- insert işlemi için log kaydı oluşturma ----
 
