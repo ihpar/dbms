@@ -116,7 +116,7 @@ create trigger t3
 after update of okul_adi on okullar 
 for each row 
 begin
-	update basvurular s
+	update basvurular
 	set okul_adi = new.okul_adi 
 	where okul_adi = old.okul_adi;
 end;
