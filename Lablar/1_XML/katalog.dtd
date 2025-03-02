@@ -1,15 +1,15 @@
 <!ELEMENT katalog (kitaplar | plaklar)*>
 <!ELEMENT kitaplar (kitap)*>
 <!ELEMENT plaklar (plak)*>
-<!ELEMENT kitap (yazar, başlık, tür?, fiyat)>
+<!ELEMENT kitap (yazar, baslik, tur?, fiyat)>
 <!ATTLIST kitap
     id CDATA #REQUIRED
-    baskı CDATA #IMPLIED>
+    baski CDATA #IMPLIED>
 <!ELEMENT yazar (#PCDATA)>
-<!ELEMENT başlık (#PCDATA)>
-<!ELEMENT tür (#PCDATA)>
+<!ELEMENT baslik (#PCDATA)>
+<!ELEMENT tur (#PCDATA)>
 <!ELEMENT fiyat (#PCDATA)>
-<!ELEMENT plak (albüm, şarkıcı+, yılı)>
-<!ELEMENT albüm (#PCDATA)>
-<!ELEMENT şarkıcı (#PCDATA)>
-<!ELEMENT yılı (#PCDATA)>
+<!ELEMENT plak (album, sarkici+, yili)>
+<!ELEMENT album (#PCDATA)>
+<!ELEMENT sarkici (#PCDATA)>
+<!ELEMENT yili (#PCDATA)>

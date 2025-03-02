@@ -4,27 +4,27 @@
   <kitaplar>
     <kitap id="bk1">
       <yazar>J. K. Rowling</yazar>
-      <başlık>Harry Potter</başlık>
-      <tür>Fantastik</tür>
+      <baslik>Harry Potter</baslik>
+      <tur>Fantastik</tur>
       <fiyat>40</fiyat>
     </kitap>
-    <kitap id="bk2" baskı="3. baskı">
+    <kitap id="bk2" baski="3. baski">
       <yazar>Miguel de Cervantes</yazar>
-      <başlık>Don Kişot</başlık>
+      <baslik>Don Kişot</baslik>
       <fiyat>50</fiyat>
     </kitap>
   </kitaplar>
   <plaklar>
     <plak>
-      <albüm>Love for Sale</albüm>
-      <şarkıcı>Tony Bennett</şarkıcı>
-      <şarkıcı>Lady Gaga</şarkıcı>
-      <yılı>2021</yılı>
+      <album>Love for Sale</album>
+      <sarkici>Tony Bennett</sarkici>
+      <sarkici>Lady Gaga</sarkici>
+      <yili>2021</yili>
     </plak>
     <plak>
-      <albüm>Back in Black</albüm>
-      <şarkıcı>AC/DC</şarkıcı>
-      <yılı>1980</yılı>
+      <album>Back in Black</album>
+      <sarkici>AC/DC</sarkici>
+      <yili>1980</yili>
     </plak>
   </plaklar>
 </katalog>
