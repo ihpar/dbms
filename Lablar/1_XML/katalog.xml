@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE katalog SYSTEM "katalog.dtd">
 <katalog>
-  <kitaplar>
+   <kitaplar>
     <kitap id="bk1">
       <yazar>J. K. Rowling</yazar>
       <baslik>Harry Potter</baslik>
