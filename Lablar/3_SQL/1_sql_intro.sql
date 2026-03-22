@@ -269,16 +269,10 @@ select o1.ogr_adi, o1.ort
 from ogrenciler o1, ogrenciler o2 
 where o1.ort > o2.ort;
 
--- Alternatif 1
+-- Alternatif
 select ogr_adi, ort
 from ogrenciler
 where ort >= all (select ort from ogrenciler);
-
--- Alternatif 2
-select o1.ogr_adi, o1.ort
-from ogrenciler o1
-where ort > all (select o2.ort from ogrenciler o2
-				where o2.ogr_id != o1.ogr_id);
 
 /*
 lise mevcudu en düşük olmayan tüm öğrencilerin listesi
@@ -326,6 +320,8 @@ where abs(O.agirlikli_ort - ort) > 1;
 /*
 Ortalaması ile ağırlıklı ortalaması arasındaki fark 1'den büyük olan öğrenciler
 ağırlıklı ortalama = ortalama * lise mevcudu / 1000
+
+CTE: Common Table Expression
 */
 
 with aort_tablosu as (
